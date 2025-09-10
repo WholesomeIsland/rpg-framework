@@ -4,6 +4,8 @@
 #include <vector>
 
 struct Encounter {
-    Party player;
+    Party& player;
     std::vector<Enemy> enemies;
+    bool enemyTurn;
+    void doTurn();
 };

@@ -6,6 +6,8 @@ struct Character {
     int maxMagic;
     int defense;
     int level;
+    bool doneTurn;
+    int speed;
     void TakeDamage(int damage);
     void Heal(int amt);
 };
