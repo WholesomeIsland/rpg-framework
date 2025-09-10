@@ -7,10 +7,10 @@ void Encounter::doTurn(){
         for (auto e : this->enemies)
         {
             if(!enemytotaketurn){
-                enemytotaketurn = &e;
+                enemytotaketurn = e;
             }
-            if(!e.doneTurn && e.speed > enemytotaketurn->speed){
-                enemytotaketurn = &e;
+            if(!e->doneTurn && e->speed > enemytotaketurn->speed){
+                enemytotaketurn = e;
             }
         }
         Character* target = nullptr;
@@ -23,11 +23,33 @@ void Encounter::doTurn(){
             break;
         
         case EnemyType::Boss:
+        for(int i = 0; i < 4; i++){
+            Character* c = &this->player.party[i];
+            if(c == nullptr){
+                continue;
+            }
+            if(target == nullptr || c->attack > target->attack){
+                target = c;
+            }
+        }
             break;
         }
+        enemytotaketurn->Attack(target);
     }
     else{
 
     }
     enemyTurn = !enemyTurn;
+}
+void Encounter::draw(sf::RenderWindow& window){
+    window.draw(this->bgTex);
+    for(auto e : this->enemies){
+        window.draw(e->sprite);
+    }
+    for(int i = 0; i < 4; i++){
+        Character* c = &this->player.party[i];
+        window.draw(c->sprite);
+    }
+    // draw UI
+
 }

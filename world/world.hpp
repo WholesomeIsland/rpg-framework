@@ -7,9 +7,9 @@ class World {
 public:
     World() = default;
     ~World() = default;
-    Party currentParty;
-    std::weak_ptr<Encounter> currentEncounter;
+    Party* currentParty;
+    Encounter* currentEncounter;
     bool inEncounter;
-    void render();
-    void startEncounter(std::weak_ptr<Encounter> enc);
+    void render(sf::RenderWindow window);
+    void startEncounter(Encounter* enc);
 };

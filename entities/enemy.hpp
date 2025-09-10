@@ -1,5 +1,5 @@
 #pragma once
-
+#include "party.hpp"
 enum EnemyType {
     Basic,
     Boss
@@ -13,7 +13,9 @@ struct Enemy{
     int defense;
     bool doneTurn;
     int speed;
+    Sprite sprite;
     EnemyType type;
     void TakeDamage(int dmg);
     void Heal(int amt);
+    void Attack(Character*);
 };

@@ -2,11 +2,10 @@
 
 World::World(){}
 
-void World::render(){
+void World::render(sf::RenderWindow window){
     if(inEncounter){
-        //render encounter
+        currentEncounter->draw(window);
+        return;
     }
-    else{
-        //render background
-    }
+    
 }
