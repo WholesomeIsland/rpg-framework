@@ -42,7 +42,7 @@ void Encounter::doTurn(){
     enemyTurn = !enemyTurn;
 }
 void Encounter::draw(sf::RenderWindow& window){
-    window.draw(this->bgTex);
+    window.draw(this->bgSprite);
     for(auto e : this->enemies){
         window.draw(e->sprite);
     }
@@ -52,4 +52,16 @@ void Encounter::draw(sf::RenderWindow& window){
     }
     // draw UI
 
+}
+Encounter::Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies)
+    : bgTex(), bgSprite(*bgTex)
+    , enemyTurn(false)
+    , player(player)
+    , enemies(enemies)
+{
+    if(!bgTex->loadFromFile(bgTexPath.string())){
+        //failed to load texture
+        return;
+    }
+    this->bgSprite.setTexture(*this->bgTex);
 }
