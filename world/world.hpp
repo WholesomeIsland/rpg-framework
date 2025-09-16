@@ -10,9 +10,10 @@ public:
     Party* currentParty;
     Encounter* currentEncounter;
     sf::Texture* worldMapTex;
-    sf::Sprite worldMap;
+    sf::Sprite* worldMap;
     bool inEncounter;
     void render(sf::RenderWindow window);
     void startEncounter(Encounter* enc);
     void LoadMap(const std::filesystem::path& filename);
+    
 };

@@ -1,8 +1,6 @@
 #include "world.hpp"
 
 World::World()
-    : worldMapTex(new sf::Texture())
-    , worldMap(*worldMapTex)
 {
 }
 
@@ -11,6 +9,32 @@ void World::render(sf::RenderWindow window){
         currentEncounter->draw(window);
         return;
     }
-    window.draw(worldMap);
+    window.draw(*worldMap);
     window.draw(currentParty->party[0].sprite);
+}
+
+void World::startEncounter(Encounter* enc){
+    if(enc == nullptr) return;
+    this->currentEncounter = enc;
+    inEncounter = true;
+}
+
+void World::LoadMap(const std::filesystem::path& path){
+    enum FileType{
+        tiled,
+        png
+    };
+    FileType type;
+    if(path.extension() == "tmx") type = FileType::tiled;
+    if(path.extension() == "png") type = FileType::png;
+    switch (type)
+    {
+    case FileType::tiled:
+        /* code */
+        break;
+    case FileType::png:
+        break;
+    default:
+        break;
+    }
 }
