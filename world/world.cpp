@@ -30,9 +30,10 @@ void World::LoadMap(const std::filesystem::path& path){
     switch (type)
     {
     case FileType::tiled:
-        /* code */
         break;
     case FileType::png:
+        this->worldMapTex = new sf::Texture();
+        this->worldMapTex->loadFromFile(path);
         break;
     default:
         break;
