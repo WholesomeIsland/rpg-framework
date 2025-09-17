@@ -1,16 +1,13 @@
 #include "world.hpp"
 
-World::World()
-{
-}
-
-void World::render(sf::RenderWindow window){
+void World::render(sf::RenderWindow& window){
     if(inEncounter){
         currentEncounter->draw(window);
         return;
     }
+    worldMap->setPosition(sf::Vector2f(0,0));
     window.draw(*worldMap);
-    window.draw(currentParty->party[0].sprite);
+    //window.draw(currentParty->party[0].sprite);
 }
 
 void World::startEncounter(Encounter* enc){
@@ -23,13 +20,13 @@ void World::LoadMap(const std::filesystem::path& path){
     enum FileType{
         png
     };
-    FileType type;
-    if(path.extension() == "png") type = FileType::png;
+    FileType type = FileType::png;
     switch (type)
     {
     case FileType::png:
-        this->worldMapTex = new sf::Texture();
-        this->worldMapTex->loadFromFile(path);
+        this->worldMapTex = new sf::Texture(path.string());
+        std::cout << path << std::endl;
+        this->worldMap = new sf::Sprite(*this->worldMapTex);
         break;
     default:
         break;
