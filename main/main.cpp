@@ -2,7 +2,7 @@
 #include "../world/world.hpp"
 
 int main(){
-    sf::RenderWindow mainWindow(sf::VideoMode({800, 600}), "Main Window");
+    sf::RenderWindow mainWindow(sf::VideoMode({960, 540}), "Main Window");
     World mainWorld = World();
     mainWorld.LoadMap("backgrounds/test-map.png");
     while(mainWindow.isOpen()){
@@ -12,5 +12,6 @@ int main(){
             }
         }
         mainWorld.render(mainWindow);
+        mainWindow.display();
     }
 }

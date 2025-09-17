@@ -5,7 +5,6 @@ void World::render(sf::RenderWindow& window){
         currentEncounter->draw(window);
         return;
     }
-    worldMap->setPosition(sf::Vector2f(0,0));
     window.draw(*worldMap);
     //window.draw(currentParty->party[0].sprite);
 }
