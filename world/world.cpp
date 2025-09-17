@@ -21,16 +21,12 @@ void World::startEncounter(Encounter* enc){
 
 void World::LoadMap(const std::filesystem::path& path){
     enum FileType{
-        tiled,
         png
     };
     FileType type;
-    if(path.extension() == "tmx") type = FileType::tiled;
     if(path.extension() == "png") type = FileType::png;
     switch (type)
     {
-    case FileType::tiled:
-        break;
     case FileType::png:
         this->worldMapTex = new sf::Texture();
         this->worldMapTex->loadFromFile(path);
