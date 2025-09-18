@@ -11,7 +11,7 @@ struct Character {
     bool doneTurn;
     int speed;
     int attack;
-    Sprite sprite;
+    Sprite* sprite;
     void TakeDamage(int damage);
     void Heal(int amt);
 };

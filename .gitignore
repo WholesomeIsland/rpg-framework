@@ -4,4 +4,6 @@ out
 .idea
 .vs
 .vscode
-test-assets/
+test-assets/backgrounds
+test-assets/tiled
+test-assets/*.tiled*
