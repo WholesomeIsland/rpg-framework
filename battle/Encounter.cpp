@@ -19,12 +19,12 @@ void Encounter::doTurn(){
         {
         case EnemyType::Basic:{
             auto t = rand() & 4;
-            target = &this->player.party[t];
+            target = this->player.party[t];
             break;
         }
         case EnemyType::Boss:{
         for(int i = 0; i < 4; i++){
-            Character* c = &this->player.party[i];
+            Character* c = this->player.party[i];
             if(c == nullptr){
                 continue;
             }
@@ -48,8 +48,8 @@ void Encounter::draw(sf::RenderWindow& window){
         window.draw(e->sprite);
     }
     for(int i = 0; i < 4; i++){
-        Character* c = &this->player.party[i];
-        window.draw(c->sprite);
+        Character* c = this->player.party[i];
+        window.draw(*c->sprite);
     }
     // draw UI
 

@@ -6,13 +6,13 @@
 class Sprite : public sf::Drawable, public sf::Transformable {
 public:
     sf::Texture texture;
+    sf::Texture sheetTexture;
     mutable sf::Sprite sprite;
     AnimationManager animationManager;
     std::string currentAnimation;
     
     Sprite(std::string spriteSheetFile);
-    void addAnimation(std::string animation, sf::Texture texture,
-       sf::Vector2i sheetSize, sf::Vector2i spriteSize, sf::Vector2i index = sf::Vector2i(0, 0),
+    void addAnimation(std::string animation, sf::Vector2i spritesheetSize, sf::Vector2i spriteSize, sf::Vector2i index = sf::Vector2i(0, 0),
        int frequency = 0, sf::Vector2i startingIndex = sf::Vector2i(0, 0));
     void setAnimation(std::string animation) { currentAnimation = animation; }
     std::string getCurrentAnimation() const { return currentAnimation; }

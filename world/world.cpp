@@ -6,7 +6,7 @@ void World::render(sf::RenderWindow& window){
         return;
     }
     window.draw(*worldMap);
-    //window.draw(currentParty->party[0].sprite);
+    window.draw(*currentParty->party[0]->sprite);
 }
 
 void World::startEncounter(Encounter* enc){

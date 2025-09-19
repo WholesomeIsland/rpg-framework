@@ -17,5 +17,5 @@ struct Character {
 };
 
 struct Party {
-    Character party[4];
+    Character* party[4];
 };
