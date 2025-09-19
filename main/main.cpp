@@ -1,8 +1,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../world/world.hpp"
-float playerSpeed = 0.01f;
+float playerSpeed = 30.f;
 int main(){
-    sf::RenderWindow mainWindow(sf::VideoMode({480, 320}), "Main Window");
+    sf::RenderWindow mainWindow(sf::VideoMode({900, 540}), "Main Window");
     World mainWorld = World();
     Character* mainChar = new Character();
     mainChar->sprite = new Sprite("player/player.png");
@@ -16,6 +16,7 @@ int main(){
     while(mainWindow.isOpen()){
         auto currentTime = std::chrono::steady_clock::now();
         auto elapsed = currentTime - previousTime;
+        previousTime = currentTime;
         mainWindow.clear(sf::Color::Black);
         while(const std::optional event = mainWindow.pollEvent()){
             if(event->is<sf::Event::Closed>()){
