@@ -36,6 +36,7 @@ int main(){
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
                 mainChar->sprite->move({1 * dt * playerSpeed, 0});
             }
+        Encounter* enc = new Encounter("backgrounds/battle-bg.png", *mainWorld.currentParty, std::vector<Enemy*>{new Enemy("enemies/slime.png", "slime.cfg", 10, 5)});
         mainWorld.render(mainWindow);
         mainWindow.display();
     }

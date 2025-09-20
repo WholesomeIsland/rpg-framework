@@ -45,7 +45,7 @@ void Encounter::doTurn(){
 void Encounter::draw(sf::RenderWindow& window){
     window.draw(this->bgSprite);
     for(auto e : this->enemies){
-        window.draw(e->sprite);
+        window.draw(*e->sprite);
     }
     for(int i = 0; i < 4; i++){
         Character* c = this->player.party[i];

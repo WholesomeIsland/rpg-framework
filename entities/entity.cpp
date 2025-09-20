@@ -6,3 +6,7 @@
 void Enemy::Attack(Character* c){
     
 }
+Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl){
+    sprite = new Sprite(spriteFile);
+    doneTurn = false;
+}

@@ -13,9 +13,10 @@ struct Enemy{
     int defense;
     bool doneTurn;
     int speed;
-    Sprite sprite;
+    Sprite* sprite;
     EnemyType type;
     void TakeDamage(int dmg);
     void Heal(int amt);
     void Attack(Character*);
+    Enemy(std::string spriteFile, std::string enemyDescFile, int lvl);
 };
