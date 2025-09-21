@@ -2,14 +2,6 @@
 using namespace std;
 using namespace sf;
 // Map definitions
-map<string, Texture> AnimationManager::m_textures;
-map<string, Vector2i> AnimationManager::m_indicies;
-map<string, Vector2i> AnimationManager::m_startingIndicies;
-map<string, Vector2i> AnimationManager::m_endingIndicies;
-map<string, Vector2i> AnimationManager::m_sheetSizes;
-map<string, Vector2i> AnimationManager::m_spriteSizes;
-map<string, int> AnimationManager::m_frequencies;
-map<string, int> AnimationManager::m_timesUpdated;
 
 
 /*
@@ -25,6 +17,15 @@ void AnimationManager::update(string animation, Sprite &sprite) {
   // We look at the sheet size because that is the easiest indicator to tell if
   // there is actually an entry
   if (m_sheetSizes[animation] != Vector2i(0, 0)) {
+    // If we have a frequency set, we want to check if we need to update, and return if not
+    // We do this by seeing how much time has passed since the last update, and comparing against the fixed update interval
+    if(m_frequencies[animation] > 0){
+      float timePerUpdate = 1.0f / m_frequencies[animation];
+      auto currentTime = std::chrono::steady_clock::now();
+      if(currentTime - m_timeUpdated[animation] < std::chrono::duration<float>(timePerUpdate)){
+        return;
+      }
+    }
     // We want to do a few calculations to find the coordinates of the next frame
     IntRect rect({m_indicies[animation].x * m_spriteSizes[animation].x,
        m_indicies[animation].y * m_spriteSizes[animation].y},
@@ -32,21 +33,21 @@ void AnimationManager::update(string animation, Sprite &sprite) {
 
     // Now we want to update the indicies based on the format of our sheet
     // If we are not at the bottom of a column, we just move down one in y
-    if (m_indicies[animation].y < m_sheetSizes[animation].y) {
+    if (m_indicies[animation].y < m_endingIndicies[animation].y) {
       m_indicies[animation].y++;
     } else {
       // Otherwise, we move over one column and go back to the top
       m_indicies[animation].y = 0;
       m_indicies[animation].x++;
       // And then reset the sheet if we are past the width of the sheet
-      if (m_indicies[animation].x >= m_sheetSizes[animation].x)
+      if (m_indicies[animation].x >= m_endingIndicies[animation].x)
         m_indicies[animation].x = 0;
     }
 
     // Now we update the texture on our sprite reference
     sprite.setTexture(m_textures[animation]);
     sprite.setTextureRect(rect);
-
+    m_timeUpdated[animation] = std::chrono::steady_clock::now();
   } else {
     // If we didn't find an entry
     cout << "No animation entry found for \"" << animation << "\"!" << endl;
@@ -130,7 +131,7 @@ void AnimationManager::deleteAnimation(string animation) {
   m_sheetSizes.erase(animation);
   m_spriteSizes.erase(animation);
   m_frequencies.erase(animation);
-  m_timesUpdated.erase(animation);
+  m_timeUpdated.erase(animation);
   m_endingIndicies.erase(animation);
   // Ez pz
 }

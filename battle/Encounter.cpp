@@ -43,26 +43,32 @@ void Encounter::doTurn(){
     enemyTurn = !enemyTurn;
 }
 void Encounter::draw(sf::RenderWindow& window){
-    window.draw(this->bgSprite);
+    window.draw(*this->bgSprite);
+    int ei = 0;
     for(auto e : this->enemies){
+        int enemyX = 100 + (ei * 100);
+        int enemyY = window.getSize().y / 2 - 50;
+        e->sprite->sprite.setPosition({(float)enemyX, (float)enemyY});
         window.draw(*e->sprite);
+        ei++;
     }
     for(int i = 0; i < 4; i++){
+        int charX = window.getSize().x - 200;
+        int charY = window.getSize().y - 150 - (i * 50);
         Character* c = this->player.party[i];
+        if(c == nullptr) continue;
+        c->sprite->sprite.setPosition({(float)charX, (float)charY});
         window.draw(*c->sprite);
     }
     // draw UI
 
 }
 Encounter::Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies)
-    : bgTex(), bgSprite(*bgTex)
+    : bgTex(), bgSprite()
     , enemyTurn(false)
     , player(player)
     , enemies(enemies)
 {
-    if(!bgTex->loadFromFile(bgTexPath.string())){
-        //failed to load texture
-        return;
-    }
-    this->bgSprite.setTexture(*this->bgTex);
+    bgTex = new sf::Texture(bgTexPath.string());
+    this->bgSprite = new sf::Sprite(*bgTex);
 }

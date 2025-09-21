@@ -28,9 +28,12 @@ sf::Sprite
 sf::Texture
 sf::Vector2i/f
 
-modified by wholesomeisland to remove using statements
+modified by wholesomeisland to remove using statements, and add some extra functionality
 
-
+- animations will use the starting and ending indices now, instead of assuming the entire sheet is used
+- made everything non-static
+- changed frequency to be how often the animation updates per second, instead of how many frames to wait between updates
+- removed using namespace std and using namespace sf from header, still used in cpp
 */
 
 #pragma once
@@ -70,7 +73,7 @@ private:
   Since we don't know exactly what actions will be animated with this class, we
   will allow the user to define their own identifiable sprite sheets
   */
-  static std::map<std::string, sf::Texture> m_textures;
+   std::map<std::string, sf::Texture> m_textures;
   /*
   We will want to keep track of where we are in the spritesheet, again for each
   user-defined sheet
@@ -78,20 +81,20 @@ private:
   In the case that we are using a 1 column sheet, we should be able to tell through
   the size, and ignore the second index
   */
-  static std::map<std::string, sf::Vector2i> m_indicies;
+   std::map<std::string, sf::Vector2i> m_indicies;
 
   /*
   Since some spritesheets will contain multiple sets of animations, we want to
   define a start index for all of our entries (though it may just be (0,0) for most)
   We also define where they end (which will usually just be the size of the sheet)
   */
-  static std::map<std::string, sf::Vector2i> m_startingIndicies;
-  static std::map<std::string, sf::Vector2i> m_endingIndicies;
+   std::map<std::string, sf::Vector2i> m_startingIndicies;
+   std::map<std::string, sf::Vector2i> m_endingIndicies;
 
   // The former will be for the number of frames in a sheet, while the latter
   // is the actual size of each frame in the sheets
-  static std::map<std::string, sf::Vector2i> m_sheetSizes;
-  static std::map<std::string, sf::Vector2i> m_spriteSizes;
+   std::map<std::string, sf::Vector2i> m_sheetSizes;
+   std::map<std::string, sf::Vector2i> m_spriteSizes;
 
   /*
   Since we will assume that every sheet will be updated every frame, we will
@@ -99,24 +102,26 @@ private:
 
   This values will be integers of the form where 1 (or 0) means it is updated
   every call, 2 is updated every other call, etc.
+
+  Changed to be how often the animation gets updated per second
   */
-  static std::map<std::string, int> m_frequencies;
+   std::map<std::string, int> m_frequencies;
 
   /*
   Because of the frequency issue, we also have to keep track of how many times
   we have updated our sprites
   */
-  static std::map<std::string, int> m_timesUpdated;
+   std::map<std::string, std::chrono::steady_clock::time_point> m_timeUpdated;
 public:
 
-  static void update(std::string animation, sf::Sprite& sprite);
+   void update(std::string animation, sf::Sprite& sprite);
 
   /*
   This method may not be used, as it would require the game to organize all of
   the animated sprites in a map, though it could be useful in a few situations,
   so there's no harm in programming it now (it shouldn't be that hard)
   */
-  static void updateAll(std::map<std::string, sf::Sprite>& map);
+   void updateAll(std::map<std::string, sf::Sprite>& map);
 
   /*
   The overloaded methods below will be the main functionality as far as adding
@@ -124,20 +129,20 @@ public:
   create the entry at the same time, while the second will require supplementation
   by the setter methods below, otherwise they will maintain default values
   */
-  static void addAnimation(std::string animation, sf::Texture texture, sf::Vector2i sheetSize,
+   void addAnimation(std::string animation, sf::Texture texture, sf::Vector2i sheetSize,
      sf::Vector2i spriteSize, sf::Vector2i index = sf::Vector2i(0, 0), int frequency = 0,
     sf::Vector2i startingIndex = sf::Vector2i(0, 0));
 
-  static void deleteAnimation(std::string animation);
+   void deleteAnimation(std::string animation);
 
-  static void setAnimationFrequency(std::string animation, int frequency);
-  static void setAnimationSpriteSize(std::string animation, sf::Vector2i size);
-  static void setAnimationSheetSize(std::string animation, sf::Vector2i size);
-  static void setAnimationIndex(std::string animation, sf::Vector2i index);
-  static void setAnimationTexture(std::string animation, sf::Texture texture);
-  static void setAnimationStartingIndex(std::string animation, sf::Vector2i index);
-  static void setAnimationEndingIndex(std::string animation, sf::Vector2i index);
+   void setAnimationFrequency(std::string animation, int frequency);
+   void setAnimationSpriteSize(std::string animation, sf::Vector2i size);
+   void setAnimationSheetSize(std::string animation, sf::Vector2i size);
+   void setAnimationIndex(std::string animation, sf::Vector2i index);
+   void setAnimationTexture(std::string animation, sf::Texture texture);
+   void setAnimationStartingIndex(std::string animation, sf::Vector2i index);
+   void setAnimationEndingIndex(std::string animation, sf::Vector2i index);
 
 
-  static void resetAnimationIndex(std::string animation);
+   void resetAnimationIndex(std::string animation);
 };

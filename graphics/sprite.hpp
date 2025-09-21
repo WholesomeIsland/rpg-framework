@@ -8,7 +8,7 @@ public:
     sf::Texture texture;
     sf::Texture sheetTexture;
     mutable sf::Sprite sprite;
-    AnimationManager animationManager;
+    mutable AnimationManager animationManager;
     std::string currentAnimation;
     
     Sprite(std::string spriteSheetFile);

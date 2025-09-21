@@ -12,7 +12,7 @@ struct Encounter {
     Party& player;
     std::vector<Enemy*> enemies;
     sf::Texture* bgTex;
-    sf::Sprite bgSprite;
+    sf::Sprite* bgSprite;
     bool enemyTurn;
     void doTurn();
     void draw(sf::RenderWindow& window);

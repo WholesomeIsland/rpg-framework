@@ -11,6 +11,8 @@ struct Enemy{
     int magic;
     int maxMagic;
     int defense;
+    int attack;
+    int level;
     bool doneTurn;
     int speed;
     Sprite* sprite;
@@ -18,5 +20,5 @@ struct Enemy{
     void TakeDamage(int dmg);
     void Heal(int amt);
     void Attack(Character*);
-    Enemy(std::string spriteFile, std::string enemyDescFile, int lvl);
+    Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize);
 };
