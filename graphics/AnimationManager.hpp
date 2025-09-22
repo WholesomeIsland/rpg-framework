@@ -113,8 +113,8 @@ private:
   */
    std::map<std::string, std::chrono::steady_clock::time_point> m_timeUpdated;
 public:
-
-   void update(std::string animation, sf::Sprite& sprite);
+   //returns true if the animation was looped/completed this frame
+   bool update(std::string animation, sf::Sprite& sprite);
 
   /*
   This method may not be used, as it would require the game to organize all of

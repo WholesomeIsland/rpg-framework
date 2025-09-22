@@ -1,8 +1,8 @@
 #include "world.hpp"
 
-void World::render(sf::RenderWindow& window){
+void World::render(sf::RenderWindow& window, float dt){
     if(inEncounter){
-        currentEncounter->draw(window);
+        currentEncounter->draw(window, dt);
         return;
     }
     window.draw(*worldMap);

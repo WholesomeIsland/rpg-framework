@@ -18,8 +18,15 @@ void Encounter::doTurn(){
         switch (enemytotaketurn->type)
         {
         case EnemyType::Basic:{
-            auto t = rand() & 4;
-            target = this->player.party[t];
+            int mod = 0;
+            for(int i = 0; i < 4; i++){
+                Character* c = this->player.party[i];
+                if(c == nullptr){
+                    continue;
+                }
+                mod++;
+            }
+            target = this->player.party[rand() % mod];
             break;
         }
         case EnemyType::Boss:{
@@ -42,13 +49,16 @@ void Encounter::doTurn(){
     }
     enemyTurn = !enemyTurn;
 }
-void Encounter::draw(sf::RenderWindow& window){
+void Encounter::draw(sf::RenderWindow& window, float dt){
     window.draw(*this->bgSprite);
     int ei = 0;
     for(auto e : this->enemies){
-        int enemyX = 100 + (ei * 100);
-        int enemyY = window.getSize().y / 2 - 50;
+        int enemyX = 200;
+        int enemyY = window.getSize().y / this->enemies.size() * ei + 50;
         e->sprite->sprite.setPosition({(float)enemyX, (float)enemyY});
+        if(e->attacking) {
+            e->AttackTick(dt);
+        }
         window.draw(*e->sprite);
         ei++;
     }

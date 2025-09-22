@@ -3,13 +3,38 @@
 #include "enemy.hpp"
 #include "party.hpp"
 #include "inicpp.hpp"
-
+#include "../globals/gmath.hpp"
 void Enemy::Attack(Character* target){
+    attacking = true;
+    lastTarget = target;
+    this->sprite->setAnimation("attack");
 }
-
+void Enemy::AttackTick(float dt){
+    switch (mttt)
+    {
+    case MoveToTargetType::Straight:
+        this->sprite->setPosition(lerp(this->sprite->getPosition(), lastTarget->sprite->getPosition(), attackTickProgress / attackTickDuration));
+        attackTickProgress += dt;
+        break;
+    case MoveToTargetType::Jump:
+        this->sprite->setPosition(lerp(this->sprite->getPosition(), lastTarget->sprite->getPosition(), attackTickProgress / attackTickDuration));
+        attackTickProgress += dt;
+        break;
+    
+    default:
+        break;
+    }
+    if(attackTickProgress >= attackTickDuration){
+        lastTarget->TakeDamage(dmgCalc(this->attack, lastTarget->defense));
+        this->sprite->setAnimation("idle");
+        this->sprite->animationFinishedLastFrame = false;
+        attacking = false;
+        attackTickProgress = 0.0f;
+    }
+    std::cout << attackTickProgress << std::endl;
+}
 Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize){
     sprite = new Sprite(spriteFile);
-    doneTurn = false;
     std::ifstream file(enemyDescFile);
     ini::IniFile ini(file);
     this->defense = ini["stats"]["defense"].as<int>();
@@ -29,8 +54,6 @@ Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vec
 }
 Character::Character(std::string spriteFile, std::string playerini, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize){
     sprite = new Sprite(spriteFile);
-    doneTurn = false;
-    
     std::ifstream file(playerini);
     ini::IniFile ini(file);
     this->defense = ini["stats"]["defense"].as<int>();
@@ -44,4 +67,9 @@ Character::Character(std::string spriteFile, std::string playerini, sf::Vector2i
     this->sprite->addAnimation("idle", spriteSheetSize, spriteSize, sf::Vector2i(0, 0), 0, sf::Vector2i(0, 0));
     this->sprite->animationManager.setAnimationEndingIndex("idle", sf::Vector2i(ini["animation"]["idleEndX"].as<int>(), ini["animation"]["idleEndY"].as<int>()));
     this->sprite->setAnimation("idle");
+}
+
+void Character::TakeDamage(int damage){
+    this->health -= damage;
+    if(this->health < 0) this->health = 0;
 }

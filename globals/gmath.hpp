@@ -1,5 +1,7 @@
 // gmath.hpp - global math functions
 
+#pragma once
+#include <sfml/System/Vector2.hpp>
 
 // damage calc formula taken from here https://jmargaris.substack.com/p/you-smack-the-rat-for-damage
 // graph from that blog post that graphs this equasion vs fire emblem https://www.desmos.com/calculator/r4djk3ewoo
@@ -12,4 +14,11 @@ int dmgCalc(int atk, int def){
         return atk * (atk/(2*def));
     }
 
+}
+
+float lerp(float a, float b, float f){
+    return a + f * (b - a);
+}
+sf::Vector2f lerp(sf::Vector2f a, sf::Vector2f b, float f){
+    return sf::Vector2f(lerp(a.x, b.x, f), lerp(a.y, b.y, f));
 }

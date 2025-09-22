@@ -13,9 +13,11 @@ Game::Game(){
     Encounter* enc = new Encounter("backgrounds/battle-bg.png", *mainWorld->currentParty, std::vector<Enemy*>{slimeEnemyBase});
     mainWorld->startEncounter(enc);
 }
-
 void Game::tick(sf::RenderWindow& window, float deltaTime) {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)){
+        mainWorld->currentEncounter->doTurn();
+    }
     window.clear();
-    mainWorld->render(window);
+    mainWorld->render(window, deltaTime);
     window.display();
 }

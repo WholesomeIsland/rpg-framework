@@ -4,7 +4,10 @@ enum EnemyType {
     Basic,
     Boss
 };
-
+enum MoveToTargetType {
+    Straight,
+    Jump
+};
 struct Enemy{
     int health;
     int maxHealth;
@@ -14,11 +17,18 @@ struct Enemy{
     int attack;
     int level;
     bool doneTurn;
+    bool attacking = false;
     int speed;
     Sprite* sprite;
     EnemyType type;
+    Character* lastTarget;
+    MoveToTargetType mttt = MoveToTargetType::Straight;
     void TakeDamage(int dmg);
     void Heal(int amt);
     void Attack(Character*);
+    void AttackTick(float dt);
     Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize);
+private:
+    float attackTickProgress = 0.0f;
+    float attackTickDuration = 1.0f; //seconds
 };

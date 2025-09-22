@@ -3,7 +3,7 @@
 Sprite::Sprite(std::string spriteSheetFile) : texture(spriteSheetFile), sheetTexture(texture), sprite(texture) {
 }
 void Sprite::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    animationManager.update(currentAnimation, sprite);
+    animationFinishedLastFrame = animationManager.update(currentAnimation, sprite);
     states.transform *= getTransform();
     target.draw(sprite, states);
 }

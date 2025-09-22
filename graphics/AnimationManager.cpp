@@ -12,10 +12,11 @@ animation - This is the string key that corresponds to the animation we are upda
 sprite - This sprite will have its texture changed to the next one in its
   animation sequence
 */
-void AnimationManager::update(string animation, Sprite &sprite) {
+bool AnimationManager::update(string animation, Sprite &sprite) {
   // First, we want to locate our animation in the map
   // We look at the sheet size because that is the easiest indicator to tell if
   // there is actually an entry
+  bool retval = false;
   if (m_sheetSizes[animation] != Vector2i(0, 0)) {
     // If we have a frequency set, we want to check if we need to update, and return if not
     // We do this by seeing how much time has passed since the last update, and comparing against the fixed update interval
@@ -23,7 +24,7 @@ void AnimationManager::update(string animation, Sprite &sprite) {
       float timePerUpdate = 1.0f / m_frequencies[animation];
       auto currentTime = std::chrono::steady_clock::now();
       if(currentTime - m_timeUpdated[animation] < std::chrono::duration<float>(timePerUpdate)){
-        return;
+        return retval;
       }
     }
     // We want to do a few calculations to find the coordinates of the next frame
@@ -40,8 +41,10 @@ void AnimationManager::update(string animation, Sprite &sprite) {
       m_indicies[animation].y = 0;
       m_indicies[animation].x++;
       // And then reset the sheet if we are past the width of the sheet
-      if (m_indicies[animation].x >= m_endingIndicies[animation].x)
+      if (m_indicies[animation].x >= m_endingIndicies[animation].x){
         m_indicies[animation].x = 0;
+        retval = true;
+      }
     }
 
     // Now we update the texture on our sprite reference
@@ -52,6 +55,7 @@ void AnimationManager::update(string animation, Sprite &sprite) {
     // If we didn't find an entry
     cout << "No animation entry found for \"" << animation << "\"!" << endl;
   }
+  return retval;
 }
 
 /*

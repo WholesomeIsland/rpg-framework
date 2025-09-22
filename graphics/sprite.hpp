@@ -10,6 +10,7 @@ public:
     mutable sf::Sprite sprite;
     mutable AnimationManager animationManager;
     std::string currentAnimation;
+    mutable bool animationFinishedLastFrame = false;
     
     Sprite(std::string spriteSheetFile);
     void addAnimation(std::string animation, sf::Vector2i spritesheetSize, sf::Vector2i spriteSize, sf::Vector2i index = sf::Vector2i(0, 0),
