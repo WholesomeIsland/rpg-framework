@@ -8,29 +8,32 @@ void Enemy::Attack(Character* target){
     attacking = true;
     lastTarget = target;
     this->sprite->setAnimation("attack");
+    this->sprite->animationManager.setAnimationFrequency("attack", 5);
+    this->startAtkPos = this->sprite->getPosition();
+    atkTimer.reset();
+    atkTimer.start();
 }
 void Enemy::AttackTick(float dt){
     switch (mttt)
     {
     case MoveToTargetType::Straight:
-        this->sprite->setPosition(lerp(this->sprite->getPosition(), lastTarget->sprite->getPosition(), attackTickProgress));
-        attackTickProgress += dt;
+        this->sprite->setPosition(lerp(startAtkPos, lastTarget->sprite->getPosition(), smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration)));
         break;
     case MoveToTargetType::Jump:
-        this->sprite->setPosition(lerp(this->sprite->getPosition(), lastTarget->sprite->getPosition(), attackTickProgress));
-        attackTickProgress += dt;
+        this->sprite->setPosition(lerp(startAtkPos, lastTarget->sprite->getPosition(), smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration)));
         break;
     
     default:
         break;
     }
-    if(attackTickProgress >= attackTickDuration){
+    if(atkTimer.getElapsedTime().asSeconds() >= attackTickDuration){
         lastTarget->TakeDamage(dmgCalc(this->attack, lastTarget->defense));
         this->sprite->setAnimation("idle");
         this->sprite->animationFinishedLastFrame = false;
         attacking = false;
-        attackTickProgress = 0.0f;
+        atkTimer.reset();
     }
+    std::cout << dt << std::endl;
 }
 Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize){
     sprite = new Sprite(spriteFile);

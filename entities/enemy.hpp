@@ -29,6 +29,7 @@ struct Enemy{
     void AttackTick(float dt);
     Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize);
 private:
-    float attackTickProgress = 0.0f;
     float attackTickDuration = 1.0f; //seconds
+    sf::Vector2f startAtkPos = sf::Vector2f(0.0f, 0.0f);
+    sf::Clock atkTimer;
 };

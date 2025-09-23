@@ -55,7 +55,8 @@ void Encounter::draw(sf::RenderWindow& window, float dt){
     for(auto e : this->enemies){
         int enemyX = 200;
         int enemyY = window.getSize().y / this->enemies.size() * ei + 50;
-        e->sprite->sprite.setPosition({(float)enemyX, (float)enemyY});
+        if(!e->attacking)
+            e->sprite->setPosition({(float)enemyX, (float)enemyY});
         if(e->attacking) {
             e->AttackTick(dt);
         }
@@ -67,7 +68,7 @@ void Encounter::draw(sf::RenderWindow& window, float dt){
         int charY = window.getSize().y - 150 - (i * 50);
         Character* c = this->player.party[i];
         if(c == nullptr) continue;
-        c->sprite->sprite.setPosition({(float)charX, (float)charY});
+        c->sprite->setPosition({(float)charX, (float)charY});
         window.draw(*c->sprite);
     }
     // draw UI
