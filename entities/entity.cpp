@@ -13,11 +13,11 @@ void Enemy::AttackTick(float dt){
     switch (mttt)
     {
     case MoveToTargetType::Straight:
-        this->sprite->setPosition(lerp(this->sprite->getPosition(), lastTarget->sprite->getPosition(), attackTickProgress / attackTickDuration));
+        this->sprite->setPosition(lerp(this->sprite->getPosition(), lastTarget->sprite->getPosition(), attackTickProgress));
         attackTickProgress += dt;
         break;
     case MoveToTargetType::Jump:
-        this->sprite->setPosition(lerp(this->sprite->getPosition(), lastTarget->sprite->getPosition(), attackTickProgress / attackTickDuration));
+        this->sprite->setPosition(lerp(this->sprite->getPosition(), lastTarget->sprite->getPosition(), attackTickProgress));
         attackTickProgress += dt;
         break;
     
@@ -31,7 +31,6 @@ void Enemy::AttackTick(float dt){
         attacking = false;
         attackTickProgress = 0.0f;
     }
-    std::cout << attackTickProgress << std::endl;
 }
 Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize){
     sprite = new Sprite(spriteFile);

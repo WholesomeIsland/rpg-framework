@@ -17,6 +17,7 @@ int dmgCalc(int atk, int def){
 }
 
 float lerp(float a, float b, float f){
+    std::cout << f << std::endl;
     return a + f * (b - a);
 }
 sf::Vector2f lerp(sf::Vector2f a, sf::Vector2f b, float f){
