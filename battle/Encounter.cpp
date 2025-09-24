@@ -54,7 +54,7 @@ void Encounter::draw(sf::RenderWindow& window, float dt){
     int ei = 0;
     for(auto e : this->enemies){
         int enemyX = 200;
-        int enemyY = window.getSize().y / this->enemies.size() * ei + 50;
+        int enemyY = window.getSize().y / 2;
         if(!e->attacking)
             e->sprite->setPosition({(float)enemyX, (float)enemyY});
         if(e->attacking) {

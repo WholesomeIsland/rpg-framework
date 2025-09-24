@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../third-party/sfml/include/SFML/System/Vector2.hpp"
+#include <cmath>
 
 // damage calc formula taken from here https://jmargaris.substack.com/p/you-smack-the-rat-for-damage
 // graph from that blog post that graphs this equasion vs fire emblem https://www.desmos.com/calculator/r4djk3ewoo
@@ -55,4 +56,18 @@ sf::Vector2f calculateJumpArc(sf::Vector2f start, sf::Vector2f end, float height
     float u = 1 - t;
     sf::Vector2f point = u * u * p0 + 2 * u * t * p1 + t * t * p2;
     return point;
+}
+float calcJumpArcSpeed(sf::Vector2f start, sf::Vector2f end, float height, float t){
+    sf::Vector2f mid = (start + end) / 2.0f;
+    mid.y = start.y;
+    mid.y -= height; // raise the midpoint to create the arc
+
+    // Quadratic Bezier curve formula
+    sf::Vector2f p0 = start;
+    sf::Vector2f p1 = mid;
+    sf::Vector2f p2 = end;
+    float u = 1 - t;
+    //calculate tangent line
+    sf::Vector2f tangent = 2 * u * (p1 - p0) + 2 * t * (p2 - p1);
+    return std::abs(tangent.y);
 }
