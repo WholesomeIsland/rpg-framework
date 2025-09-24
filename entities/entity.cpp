@@ -18,7 +18,6 @@ void Enemy::Attack(Character *target, float attackLength)
     this->attackTickDuration = attackLength;
     atkTimer.reset();
     atkTimer.start();
-    std::cout << this->sprite->animationManager.m_frequencies["attack"] << " " << frameCount / attackLength << std::endl;
 }
 void Enemy::AttackTick(float dt)
 {
@@ -29,7 +28,8 @@ void Enemy::AttackTick(float dt)
         break;
     case MoveToTargetType::Jump:{
         float jumpspeed = calcJumpArcSpeed(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration));
-        this->sprite->setPosition(calculateJumpArc(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, atkTimer.getElapsedTime().asSeconds() / (attackTickDuration)));
+        float actualPos = distAlongJumpToActualDist(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration), dt, jumpspeed);
+        this->sprite->setPosition(calculateJumpArc(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, actualPos));
         break;
     }
     default:

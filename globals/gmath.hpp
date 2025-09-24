@@ -41,6 +41,9 @@ T clamp(T value, T min, T max){
     return value;
 }
 
+
+// https://www.desmos.com/calculator/mwg06ncnsf
+
 sf::Vector2f calculateJumpArc(sf::Vector2f start, sf::Vector2f end, float height, float t){
     // parabolic jump arc calculation
     // t is a value from 0 to 1 representing the progress of the jump
@@ -70,4 +73,24 @@ float calcJumpArcSpeed(sf::Vector2f start, sf::Vector2f end, float height, float
     //calculate tangent line
     sf::Vector2f tangent = 2 * u * (p1 - p0) + 2 * t * (p2 - p1);
     return std::abs(tangent.y);
+}
+// applies velocity to the linear distance along the jump arc, returns the correct distance along the arc
+float distAlongJumpToActualDist(sf::Vector2f start, sf::Vector2f end, float height, float t, float dt, float speed){
+    // approximate the distance along the jump arc using the derivative of the Bezier curve
+    // this is not exact, but should be close enough for small dt values
+    float u = 1 - t;
+    //calculate tangent line
+    sf::Vector2f mid = (start + end) / 2.0f;
+    mid.y = start.y;
+    mid.y -= height; // raise the midpoint to create the arc
+    sf::Vector2f p0 = start;
+    sf::Vector2f p1 = mid;
+    sf::Vector2f p2 = end;
+    sf::Vector2f tangent = 2 * u * (p1 - p0) + 2 * t * (p2 - p1);
+    float tangentLength = std::sqrt(tangent.x * tangent.x + tangent.y * tangent.y);
+    if(tangentLength == 0) return t; // prevent division by zero
+    float normalizedTangentY = tangent.y / tangentLength;
+    float dist = speed * dt;
+    float adjustedDist = dist / std::abs(normalizedTangentY);
+    return t + adjustedDist;
 }
