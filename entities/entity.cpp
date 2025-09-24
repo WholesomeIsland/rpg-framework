@@ -4,12 +4,15 @@
 #include "party.hpp"
 #include "inicpp.hpp"
 #include "../globals/gmath.hpp"
-void Enemy::Attack(Character* target){
+void Enemy::Attack(Character* target, float attackLength){
     attacking = true;
     lastTarget = target;
     this->sprite->setAnimation("attack");
-    this->sprite->animationManager.setAnimationFrequency("attack", 5);
+    int frameCount = (this->sprite->animationManager.m_startingIndicies["attack"].x - this->sprite->animationManager.m_startingIndicies["attack"].x) *
+        (this->sprite->animationManager.m_endingIndicies["attack"].y - this->sprite->animationManager.m_startingIndicies["attack"].y);
+    this->sprite->animationManager.setAnimationFrequency("attack", 1);
     this->startAtkPos = this->sprite->getPosition();
+    this->attackTickDuration = attackLength;
     atkTimer.reset();
     atkTimer.start();
 }
@@ -20,7 +23,7 @@ void Enemy::AttackTick(float dt){
         this->sprite->setPosition(lerp(startAtkPos, lastTarget->sprite->getPosition(), smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration)));
         break;
     case MoveToTargetType::Jump:
-        this->sprite->setPosition(lerp(startAtkPos, lastTarget->sprite->getPosition(), smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration)));
+        this->sprite->setPosition(calculateJumpArc(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration)));
         break;
     
     default:
@@ -33,7 +36,6 @@ void Enemy::AttackTick(float dt){
         attacking = false;
         atkTimer.reset();
     }
-    std::cout << dt << std::endl;
 }
 Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize){
     sprite = new Sprite(spriteFile);

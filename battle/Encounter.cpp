@@ -42,7 +42,7 @@ void Encounter::doTurn(){
             break;
         }
         }
-        enemytotaketurn->Attack(target);
+        enemytotaketurn->Attack(target, 1.0f);
     }
     else{
 

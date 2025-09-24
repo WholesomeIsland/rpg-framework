@@ -68,7 +68,7 @@ The majority of information in this class will be contained in map types,
 where the key will be a user defined string identifying what type of animation
 is defiend there (walking, jumping, etc.)
 */
-private:
+public:
   /*
   Since we don't know exactly what actions will be animated with this class, we
   will allow the user to define their own identifiable sprite sheets
@@ -112,7 +112,7 @@ private:
   we have updated our sprites
   */
    std::map<std::string, std::chrono::steady_clock::time_point> m_timeUpdated;
-public:
+
    //returns true if the animation was looped/completed this frame
    bool update(std::string animation, sf::Sprite& sprite);
 

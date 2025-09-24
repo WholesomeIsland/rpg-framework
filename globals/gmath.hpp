@@ -27,3 +27,32 @@ sf::Vector2f lerp(sf::Vector2f a, sf::Vector2f b, float f){
 float smoothstep(float x){
     return x;
 }
+
+template<typename T>
+T lerp(T a, T b, float f){
+    return a + f * (b - a);
+}
+
+template <typename T>
+T clamp(T value, T min, T max){
+    if(value < min) return min;
+    if(value > max) return max;
+    return value;
+}
+
+sf::Vector2f calculateJumpArc(sf::Vector2f start, sf::Vector2f end, float height, float t){
+    // parabolic jump arc calculation
+    // t is a value from 0 to 1 representing the progress of the jump
+    sf::Vector2f mid = (start + end) / 2.0f;
+    mid.y = start.y;
+    mid.y -= height; // raise the midpoint to create the arc
+
+    // Quadratic Bezier curve formula
+    sf::Vector2f p0 = start;
+    sf::Vector2f p1 = mid;
+    sf::Vector2f p2 = end;
+
+    float u = 1 - t;
+    sf::Vector2f point = u * u * p0 + 2 * u * t * p1 + t * t * p2;
+    return point;
+}

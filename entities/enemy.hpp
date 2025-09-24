@@ -22,14 +22,14 @@ struct Enemy{
     Sprite* sprite;
     EnemyType type;
     Character* lastTarget;
-    MoveToTargetType mttt = MoveToTargetType::Straight;
+    MoveToTargetType mttt = MoveToTargetType::Jump;
     void TakeDamage(int dmg);
     void Heal(int amt);
-    void Attack(Character*);
+    void Attack(Character*, float attackLength = 1.0f);
     void AttackTick(float dt);
     Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize);
 private:
-    float attackTickDuration = 1.0f; //seconds
+    float attackTickDuration = 10.0f; //seconds
     sf::Vector2f startAtkPos = sf::Vector2f(0.0f, 0.0f);
     sf::Clock atkTimer;
 };
