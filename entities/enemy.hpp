@@ -32,4 +32,5 @@ private:
     float attackTickDuration = 10.0f; //seconds
     sf::Vector2f startAtkPos = sf::Vector2f(0.0f, 0.0f);
     sf::Clock atkTimer;
+    float distAlongCurve = 0.0f;
 };

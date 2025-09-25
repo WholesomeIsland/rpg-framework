@@ -49,6 +49,7 @@ sf::Vector2f calculateJumpArc(sf::Vector2f start, sf::Vector2f end, float height
     // parabolic jump arc calculation
     // t is a value from 0 to 1 representing the progress of the jump
     sf::Vector2f mid = (start + end) / 2.0f;
+    mid.y = start.y;
     mid.y -= height; // raise the midpoint to create the arc
 
     // Quadratic Bezier curve formula
@@ -62,6 +63,7 @@ sf::Vector2f calculateJumpArc(sf::Vector2f start, sf::Vector2f end, float height
 }
 float calcJumpArcSpeed(sf::Vector2f start, sf::Vector2f end, float height, float t){
     sf::Vector2f mid = (start + end) / 2.0f;
+    mid.y = start.y;
     mid.y -= height; // raise the midpoint to create the arc
 
     // Quadratic Bezier curve formula
@@ -76,6 +78,7 @@ float calcJumpArcSpeed(sf::Vector2f start, sf::Vector2f end, float height, float
 // applies velocity to the linear distance along the jump arc, returns the correct distance along the arc
 float distAlongJumpToActualDist(sf::Vector2f start, sf::Vector2f end, float height, float t, float dt, float speed){
     sf::Vector2f mid = (start + end) / 2.0f;
+    mid.y = start.y;
     mid.y -= height; // raise the midpoint to create the arc
 
     // Quadratic Bezier curve formula

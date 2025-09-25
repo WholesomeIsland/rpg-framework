@@ -13,7 +13,8 @@ void Enemy::Attack(Character *target, float attackLength)
     animMgr.resetAnimationIndex("attack");
     sf::Vector2i start = animMgr.m_startingIndicies["attack"];
     sf::Vector2i end = animMgr.m_endingIndicies["attack"];
-    int frameCount = (end.x - start.x + 1) * (end.y - start.y + 1);
+    int frameCount = (end.x - start.x) + (end.y - start.y);
+    std::cout << "Frame count: " << end.y << std::endl;
     this->sprite->animationManager.setAnimationFrequency("attack", frameCount / attackLength);
     this->startAtkPos = this->sprite->getPosition();
     this->attackTickDuration = attackLength;
@@ -28,9 +29,11 @@ void Enemy::AttackTick(float dt)
         this->sprite->setPosition(lerp(startAtkPos, lastTarget->sprite->getPosition(), smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration)));
         break;
     case MoveToTargetType::Jump:{
+        float maxSpeed = calcJumpArcSpeed(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, 0.5f);
         float jumpspeed = calcJumpArcSpeed(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration));
-        float actualPos = distAlongJumpToActualDist(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration), dt, jumpspeed);
-        this->sprite->setPosition(calculateJumpArc(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, actualPos));
+        distAlongCurve = atkTimer.getElapsedTime().asSeconds() / attackTickDuration;
+        float actualPos = (distAlongCurve) + (jumpspeed / maxSpeed);
+        this->sprite->setPosition(calculateJumpArc(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, distAlongCurve));
         break;
     }
     default:
@@ -43,6 +46,7 @@ void Enemy::AttackTick(float dt)
         this->sprite->animationFinishedLastFrame = false;
         attacking = false;
         atkTimer.reset();
+        distAlongCurve = 0.0f;
     }
 }
 Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize)
