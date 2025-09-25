@@ -146,7 +146,7 @@ Nothing too special about any of them in particular, and they all follow the
 same form
 */
 
-void AnimationManager::setAnimationFrequency(string animation, int frequency) {
+void AnimationManager::setAnimationFrequency(string animation, float frequency) {
   m_frequencies[animation] = frequency;
 }
 

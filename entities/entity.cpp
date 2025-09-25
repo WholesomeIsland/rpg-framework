@@ -10,6 +10,7 @@ void Enemy::Attack(Character *target, float attackLength)
     lastTarget = target;
     this->sprite->setAnimation("attack");
     auto& animMgr = this->sprite->animationManager;
+    animMgr.resetAnimationIndex("attack");
     sf::Vector2i start = animMgr.m_startingIndicies["attack"];
     sf::Vector2i end = animMgr.m_endingIndicies["attack"];
     int frameCount = (end.x - start.x + 1) * (end.y - start.y + 1);
@@ -63,6 +64,10 @@ Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vec
     this->sprite->addAnimation("idle", spriteSheetSize, spriteSize, index, 0, end);
     this->sprite->animationManager.setAnimationEndingIndex("idle", end);
     this->sprite->setAnimation("idle");
+    index = sf::Vector2i(ini["animation"]["attackBeginX"].as<int>(), ini["animation"]["attackBeginY"].as<int>());
+    end = sf::Vector2i(ini["animation"]["attackEndX"].as<int>(), ini["animation"]["attackEndY"].as<int>());
+    this->sprite->addAnimation("attack", spriteSheetSize, spriteSize, index, 0, end);
+    this->sprite->animationManager.setAnimationEndingIndex("attack", end);
 }
 Character::Character(std::string spriteFile, std::string playerini, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize)
 {

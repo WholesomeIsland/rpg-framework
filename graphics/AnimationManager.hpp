@@ -105,7 +105,7 @@ public:
 
   Changed to be how often the animation gets updated per second
   */
-   std::map<std::string, int> m_frequencies;
+   std::map<std::string, float> m_frequencies;
 
   /*
   Because of the frequency issue, we also have to keep track of how many times
@@ -135,7 +135,7 @@ public:
 
    void deleteAnimation(std::string animation);
 
-   void setAnimationFrequency(std::string animation, int frequency);
+   void setAnimationFrequency(std::string animation, float frequency);
    void setAnimationSpriteSize(std::string animation, sf::Vector2i size);
    void setAnimationSheetSize(std::string animation, sf::Vector2i size);
    void setAnimationIndex(std::string animation, sf::Vector2i index);

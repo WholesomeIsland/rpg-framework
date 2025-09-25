@@ -6,6 +6,7 @@ Game::Game(){
     slimeEnemyBase->sprite->setAnimation("idle");
     slimeEnemyBase->sprite->animationManager.setAnimationEndingIndex("idle", sf::Vector2i(2, 0));
     slimeEnemyBase->sprite->animationManager.setAnimationFrequency("idle", 1);
+    slimeEnemyBase->sprite->scale({-1.0f, 1.0f});
     mainCharacter = new Character("player/player.png", "player/player.ini", sf::Vector2i(3, 0), sf::Vector2i(32, 32));
     mainWorld->currentParty = new Party();
     mainWorld->currentParty->party[0] = mainCharacter;
