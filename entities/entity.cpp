@@ -28,9 +28,6 @@ void Enemy::AttackTick(float dt)
         this->sprite->setPosition(lerp(startAtkPos, lastTarget->sprite->getPosition(), smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration)));
         break;
     case MoveToTargetType::Jump:{
-        float jumpspeed = calcJumpArcSpeed(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration));
-        float actualPos = distAlongJumpToActualDist(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration), dt, jumpspeed);
-        this->sprite->setPosition(calculateJumpArc(startAtkPos, lastTarget->sprite->getPosition(), 100.0f, actualPos));
         break;
     }
     default:

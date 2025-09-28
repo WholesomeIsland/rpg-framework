@@ -22,7 +22,7 @@ struct Enemy{
     Sprite* sprite;
     EnemyType type;
     Character* lastTarget;
-    MoveToTargetType mttt = MoveToTargetType::Jump;
+    MoveToTargetType mttt = MoveToTargetType::Straight;
     void TakeDamage(int dmg);
     void Heal(int amt);
     void Attack(Character*, float attackLength = 1.0f);
