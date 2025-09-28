@@ -2,7 +2,7 @@
 
 Game::Game(){
     slimeEnemyBase = new Enemy("enemy/slime.png", "enemy/slime.ini", 2, sf::Vector2i(14, 0), sf::Vector2i(32, 32));
-    slimeEnemyBase->sprite->addAnimation("attack", sf::Vector2i(14, 0), sf::Vector2i(32, 32), sf::Vector2i(0, 0), 15, sf::Vector2i(0, 0));
+    slimeEnemyBase->sprite->addAnimation("attack", sf::Vector2i(6, 0), sf::Vector2i(32, 32), sf::Vector2i(0, 0), 15, sf::Vector2i(0, 0));
     slimeEnemyBase->sprite->setAnimation("idle");
     slimeEnemyBase->sprite->animationManager.setAnimationEndingIndex("idle", sf::Vector2i(2, 0));
     slimeEnemyBase->sprite->animationManager.setAnimationFrequency("idle", 1);
