@@ -3,7 +3,6 @@
 #include "enemy.hpp"
 #include "party.hpp"
 #include "inicpp.hpp"
-#include "../globals/gmath.hpp"
 void Enemy::Attack(Character *target, float attackLength)
 {
     attacking = true;
@@ -16,10 +15,6 @@ void Enemy::Attack(Character *target, float attackLength)
     int frameCount = (end.x - start.x) + (end.y - start.y);
     std::cout << "Frame count: " << end.y << std::endl;
     this->sprite->animationManager.setAnimationFrequency("attack", frameCount / attackLength);
-    this->startAtkPos = this->sprite->getPosition();
-    this->attackTickDuration = attackLength;
-    atkTimer.reset();
-    atkTimer.start();
 }
 void Enemy::AttackTick(float dt)
 {
