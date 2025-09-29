@@ -23,26 +23,6 @@ void Enemy::Attack(Character *target, float attackLength)
 }
 void Enemy::AttackTick(float dt)
 {
-    switch (mttt)
-    {
-    case MoveToTargetType::Straight:
-        this->sprite->setPosition(lerp(startAtkPos, lastTarget->sprite->getPosition(), smoothstep(atkTimer.getElapsedTime().asSeconds() / attackTickDuration)));
-        break;
-    case MoveToTargetType::Jump:{
-        break;
-    }
-    default:
-        break;
-    }
-    if (atkTimer.getElapsedTime().asSeconds() >= attackTickDuration)
-    {
-        lastTarget->TakeDamage(dmgCalc(this->attack, lastTarget->defense));
-        this->sprite->setAnimation("idle");
-        this->sprite->animationFinishedLastFrame = false;
-        attacking = false;
-        atkTimer.reset();
-        distAlongCurve = 0.0f;
-    }
 }
 Enemy::Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize)
 {

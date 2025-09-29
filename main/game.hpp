@@ -1,10 +1,11 @@
 #pragma once
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../world/world.hpp"
+#include "slime.hpp"
 
 class Game{
 public:
-    Enemy* slimeEnemyBase;
+    Slime* slimeEnemyBase;
     Character* mainCharacter;
     World* mainWorld = new World();
     Game();
