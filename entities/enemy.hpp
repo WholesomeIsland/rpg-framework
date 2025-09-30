@@ -20,7 +20,7 @@ struct Enemy{
     Character* lastTarget = nullptr;
     void TakeDamage(int dmg);
     void Heal(int amt);
-    void Attack(Character*, float attackLength = 1.0f);
-    void AttackTick(float dt);
+    virtual void Attack(Character*);
+    virtual void AttackTick(float dt);
     Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize);
 };
