@@ -1,6 +1,10 @@
 #include "slime.hpp"
 #include "../globals/gmath.hpp"
 
+
+Slime::Slime(int lvl)
+        : Enemy::Enemy("enemy/slime.png", "enemy/slime.ini", lvl, sf::Vector2i(14, 0), sf::Vector2i(32, 32)){}
+
 void Slime::Attack(Character* target) {
     // Initialize animation parameters
     startPos = sprite->getPosition();

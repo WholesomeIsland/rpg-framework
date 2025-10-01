@@ -4,7 +4,8 @@ enum EnemyType {
     Basic,
     Boss
 };
-struct Enemy{
+class Enemy{
+    public:
     int health;
     int maxHealth;
     int magic;
@@ -20,7 +21,8 @@ struct Enemy{
     Character* lastTarget = nullptr;
     void TakeDamage(int dmg);
     void Heal(int amt);
-    virtual void Attack(Character*);
-    virtual void AttackTick(float dt);
+    virtual void Attack(Character*) {}
+    virtual void AttackTick(float dt) {}
     Enemy(std::string spriteFile, std::string enemyDescFile, int lvl, sf::Vector2i spriteSheetSize, sf::Vector2i spriteSize);
+    ~Enemy() = default;
 };
