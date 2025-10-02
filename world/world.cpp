@@ -1,5 +1,9 @@
 #include "world.hpp"
 
+World::World(){
+    font = new sf::Font("fonts/font.ttf");
+}
+
 void World::render(sf::RenderWindow& window, float dt){
     if(inEncounter){
         currentEncounter->draw(window, dt);

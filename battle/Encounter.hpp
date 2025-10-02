@@ -12,6 +12,6 @@ struct Encounter {
     sf::Sprite* bgSprite;
     bool enemyTurn = true;
     void doTurn();
-    void draw(sf::RenderWindow& window, float dt);
+    void draw(sf::RenderWindow& window, float dt, sf::Font* font);
     Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies);
 };

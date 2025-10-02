@@ -49,7 +49,7 @@ void Encounter::doTurn(){
     }
     enemyTurn = !enemyTurn;
 }
-void Encounter::draw(sf::RenderWindow& window, float dt){
+void Encounter::draw(sf::RenderWindow& window, float dt, sf::Font* font){
     window.draw(*this->bgSprite);
     int ei = 0;
     for(auto e : this->enemies){
@@ -72,7 +72,12 @@ void Encounter::draw(sf::RenderWindow& window, float dt){
         window.draw(*c->sprite);
     }
     // draw UI
-
+    sf::RectangleShape r;
+    r.setSize(sf::Vector2f(window.getSize().x - 20, window.getSize().y / 4 - 10));
+    r.setPosition(sf::Vector2f(10.f,  window.getSize().y -  window.getSize().y / 4));
+    r.setFillColor(sf::Color(0, 0, 255, 127));
+    window.draw(r);
+    sf::Text battleText(*font);
 }
 Encounter::Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies)
     : bgTex(), bgSprite()

@@ -3,7 +3,7 @@
 
 
 Slime::Slime(int lvl)
-        : Enemy::Enemy("enemy/slime.png", "enemy/slime.ini", lvl, sf::Vector2i(14, 0), sf::Vector2i(32, 32)){}
+        : Enemy::Enemy("enemy/slime.png", "enemy/slime.ini", lvl, sf::Vector2i(9, 0), sf::Vector2i(32, 32)){}
 
 void Slime::Attack(Character* target) {
     // Initialize animation parameters
@@ -13,6 +13,7 @@ void Slime::Attack(Character* target) {
     attackDuration = 1.0f;
     attacking = true;
     atkTimer.restart();
+    sprite->setAnimation("attack");
 }
 
 
@@ -26,6 +27,7 @@ void Slime::AttackTick(float dt) {
         if (t >= 1.0f) {
             attacking = false;
             atkTimer.restart();
+            sprite->setAnimation("idle");
         } else {
         }
     }

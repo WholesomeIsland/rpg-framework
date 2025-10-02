@@ -5,12 +5,13 @@
 // world class manages global game state
 class World {
 public:
-    World() = default;
+    World();
     ~World() = default;
     Party* currentParty;
     Encounter* currentEncounter;
     sf::Texture* worldMapTex;
     sf::Sprite* worldMap;
+    sf::Font* font;
     bool inEncounter;
     void render(sf::RenderWindow& window, float dt);
     void startEncounter(Encounter* enc);
