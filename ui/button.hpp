@@ -12,6 +12,7 @@ public:
     sf::RectangleShape buttonRect;
     sf::Text text;
     sf::Color hoverTint;
+    sf::Color clickTint;
     sf::Color textColor;
     sf::Color rectColor;
 };

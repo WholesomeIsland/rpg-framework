@@ -75,3 +75,34 @@ inline float calcJumpArcSpeed(sf::Vector2f start, sf::Vector2f end, float height
     sf::Vector2f tangent = 2 * u * (p1 - p0) + 2 * t * (p2 - p1);
     return std::sqrt(tangent.x * tangent.x + tangent.y * tangent.y);
 }
+#define MIN(a, b) a < b ? a : b
+inline sf::Color toCMYK(sf::Color i)
+{
+  float k = MIN(255-i.r,MIN(255-i.g,255-i.b));
+  float c = 255*(255-i.r-k)/(255-k); 
+  float m = 255*(255-i.g-k)/(255-k); 
+  float y = 255*(255-i.b-k)/(255-k); 
+  sf::Color result;
+  result.a = k;
+  result.r = c;
+  result.g = y;
+  result.b = k;
+  return result;
+}
+
+inline sf::Color toRGB(sf::Color i)
+{
+    sf::Color rgb;
+  rgb.r = -((i.r * (255-i.a)) / 255 + i.a - 255);
+  rgb.g = -((i.g * (255-i.a)) / 255 + i.a - 255);
+  rgb.b = -((i.b * (255-i.a)) / 255 + i.a - 255);
+  return rgb;
+}
+
+
+inline sf::Color mixColors(sf::Color input1, sf::Color input2){
+    auto cmyk1 = toCMYK(input1);
+    auto cmyk2 = toCMYK(input2);
+    sf::Color result = sf::Color(cmyk1.r + cmyk2.r, cmyk1.g + cmyk2.g, cmyk1.b + cmyk2.b);
+    return toRGB(result);
+}

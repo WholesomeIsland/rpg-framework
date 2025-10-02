@@ -6,7 +6,7 @@ World::World(){
 
 void World::render(sf::RenderWindow& window, float dt){
     if(inEncounter){
-        currentEncounter->draw(window, dt);
+        currentEncounter->draw(window, dt, font);
         return;
     }
     window.draw(*worldMap);
