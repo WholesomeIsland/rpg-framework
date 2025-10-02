@@ -1,8 +1,7 @@
 #include "world.hpp"
 
 World::World(){
-    font = new sf::Font();
-    font->openFromFile("fonts/font.ttf");
+    font = new sf::Font("fonts/font.ttf");
 }
 
 void World::render(sf::RenderWindow& window, float dt){
