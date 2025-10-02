@@ -49,7 +49,7 @@ void Encounter::doTurn(){
     }
     enemyTurn = !enemyTurn;
 }
-void Encounter::draw(sf::RenderWindow& window, float dt, sf::Font* font){
+void Encounter::draw(sf::RenderWindow& window, float dt){
     window.draw(*this->bgSprite);
     int ei = 0;
     for(auto e : this->enemies){
@@ -77,9 +77,10 @@ void Encounter::draw(sf::RenderWindow& window, float dt, sf::Font* font){
     r.setPosition(sf::Vector2f(10.f,  window.getSize().y -  window.getSize().y / 4));
     r.setFillColor(sf::Color(0, 0, 255, 127));
     window.draw(r);
-    sf::Text battleText(*font);
+    fightButton->setPosition(sf::Vector2f(10.f,  window.getSize().y -  window.getSize().y / 4));
+    fightButton->Draw(window);
 }
-Encounter::Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies)
+Encounter::Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies, sf::Font font)
     : bgTex(), bgSprite()
     , enemyTurn(false)
     , player(player)
@@ -87,4 +88,5 @@ Encounter::Encounter(std::filesystem::path bgTexPath, Party& player, std::vector
 {
     bgTex = new sf::Texture(bgTexPath.string());
     this->bgSprite = new sf::Sprite(*bgTex);
+    fightButton = new Button("Fight", font);
 }

@@ -11,7 +11,7 @@ Game::Game(){
     mainWorld->currentParty = new Party();
     mainWorld->currentParty->party[0] = mainCharacter;
     mainWorld->LoadMap("backgrounds/test-map.png");
-    Encounter* enc = new Encounter("backgrounds/battle-bg.png", *mainWorld->currentParty, std::vector<Enemy*>{slimeEnemyBase});
+    Encounter* enc = new Encounter("backgrounds/battle-bg.png", *mainWorld->currentParty, std::vector<Enemy*>{slimeEnemyBase}, *mainWorld->font);
     mainWorld->startEncounter(enc);
 }
 void Game::tick(sf::RenderWindow& window, float deltaTime) {

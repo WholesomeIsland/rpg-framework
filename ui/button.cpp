@@ -4,10 +4,10 @@
 Button::Button(std::string text, sf::Font font)
     : buttonRect(), text(font, text)
 {
-
+    buttonRect.setSize(sf::Vector2f(10.0f,10.0f));
 }
 
-bool Button::Draw(sf::RenderWindow window){
+bool Button::Draw(sf::RenderWindow& window){
     bool retval = false;
     auto mousePos = sf::Mouse::getPosition(window);
     auto rectBounds = this->buttonRect.getGlobalBounds().contains(sf::Vector2f(mousePos));
