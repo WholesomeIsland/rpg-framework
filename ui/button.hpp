@@ -4,7 +4,7 @@
 class Button : public sf::Transformable
 {
 public:
-    Button(std::string text, sf::Font font);
+    Button(std::string text, sf::Font& font);
     bool Draw(sf::RenderWindow& window); // returns true if pressed
     bool isHovered;
     bool isPressed;

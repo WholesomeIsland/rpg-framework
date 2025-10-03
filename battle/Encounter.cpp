@@ -80,7 +80,7 @@ void Encounter::draw(sf::RenderWindow& window, float dt){
     fightButton->setPosition(sf::Vector2f(10.f,  window.getSize().y -  window.getSize().y / 4));
     fightButton->Draw(window);
 }
-Encounter::Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies, sf::Font font)
+Encounter::Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies, sf::Font& font)
     : bgTex(), bgSprite()
     , enemyTurn(false)
     , player(player)

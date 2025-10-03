@@ -14,5 +14,5 @@ struct Encounter {
     Button* fightButton;
     void doTurn();
     void draw(sf::RenderWindow& window, float dt);
-    Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies, sf::Font font);
+    Encounter(std::filesystem::path bgTexPath, Party& player, std::vector<Enemy*> enemies, sf::Font& font);
 };

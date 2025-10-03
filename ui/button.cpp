@@ -1,7 +1,7 @@
 #include "button.hpp"
 #include "../globals/gmath.hpp"
 
-Button::Button(std::string text, sf::Font font)
+Button::Button(std::string text, sf::Font& font)
     : buttonRect(), text(font, text)
 {
     buttonRect.setSize(sf::Vector2f(10.0f,10.0f));
